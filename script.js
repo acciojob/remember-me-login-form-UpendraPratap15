@@ -1,47 +1,45 @@
-//your JS code here. If required.
-// Wait for the DOM to be fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-  // Get all required elements
+  // Get elements by ID
   const usernameInput = document.getElementById("username");
   const passwordInput = document.getElementById("password");
   const rememberCheckbox = document.getElementById("checkbox");
   const submitBtn = document.getElementById("submit");
   const existingBtn = document.getElementById("existing");
 
+  // Check if all required elements exist
+  if (!usernameInput || !passwordInput || !rememberCheckbox || !submitBtn || !existingBtn) {
+    console.error("One or more required elements not found in the DOM.");
+    return;
+  }
+
   // Initially hide the "Login as existing user" button
   existingBtn.style.display = "none";
 
-  // Check on page load if credentials are saved in localStorage
+  // Check on page load if credentials are saved
   const savedUsername = localStorage.getItem("savedUsername");
   const savedPassword = localStorage.getItem("savedPassword");
 
   if (savedUsername && savedPassword) {
-    // Show the "Login as existing user" button
     existingBtn.style.display = "block";
   }
 
   // Handle form submission
   submitBtn.addEventListener("click", function (e) {
-    e.preventDefault(); // Prevent actual form submission
+    e.preventDefault();
 
     const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
     const rememberMe = rememberCheckbox.checked;
 
-    // Show login alert
     alert(`Logged in as ${username}`);
 
     if (rememberMe) {
-      // Save credentials to localStorage
       localStorage.setItem("savedUsername", username);
       localStorage.setItem("savedPassword", password);
-      // Show the existing user button
       existingBtn.style.display = "block";
     } else {
-      // Remove saved credentials if "Remember Me" is unchecked
       localStorage.removeItem("savedUsername");
       localStorage.removeItem("savedPassword");
-      // Hide the existing user button
       existingBtn.style.display = "none";
     }
   });
